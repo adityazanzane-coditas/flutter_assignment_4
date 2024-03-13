@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class StopwatchScreen extends StatefulWidget {
+  const StopwatchScreen({super.key});
+
   @override
   _StopwatchScreenState createState() => _StopwatchScreenState();
 }
 
 class _StopwatchScreenState extends State<StopwatchScreen> {
-  Stopwatch _stopwatch = Stopwatch();
+  final Stopwatch _stopwatch = Stopwatch();
   int milliseconds = 0;
   List<int> lapTimes = [];
 
@@ -36,18 +37,23 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SnapStop'),
+        title: const Text(
+          'SnapStop',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Container(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 0, 0, 0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildTimerWidget(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildControls(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Expanded(child: _buildLapList()),
             ],
           ),
@@ -66,22 +72,65 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                SizedBox(
+                Container(
                   width: 200,
                   height: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 5.0,
+                    ),
+                  ),
                   child: CircularProgressIndicator(
                     value: milliseconds / 60000,
-                    strokeWidth: 10,
-                    backgroundColor: Colors.grey,
+                    strokeWidth: 9,
+                    backgroundColor: Colors.transparent,
                     valueColor:
-                        const AlwaysStoppedAnimation<Color>(Colors.blue),
+                        const AlwaysStoppedAnimation<Color>(Colors.orange),
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  left: 100,
+                  child: Container(
+                    height: 10,
+                    width: 3,
+                    color: Colors.white,
+                  ),
+                ),
+                Positioned(
+                  bottom: 10,
+                  left: 100,
+                  child: Container(
+                    height: 10,
+                    width: 3,
+                    color: Colors.white,
+                  ),
+                ),
+                Positioned(
+                  left: 10,
+                  top: 100,
+                  child: Container(
+                    height: 3,
+                    width: 10,
+                    color: Colors.white,
+                  ),
+                ),
+                Positioned(
+                  right: 10,
+                  top: 100,
+                  child: Container(
+                    height: 3,
+                    width: 10,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
                   _timeFormat(milliseconds),
                   style: const TextStyle(
                     fontSize: 33.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -108,8 +157,8 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        shape: CircleBorder(),
-        padding: EdgeInsets.all(25),
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(25),
       ),
       child: Text(label),
     );
@@ -124,7 +173,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             'Lap ${index + 1}: ${_timeFormat(lapTimes[index])}',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         );
